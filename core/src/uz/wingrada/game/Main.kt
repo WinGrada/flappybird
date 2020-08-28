@@ -6,17 +6,21 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
+
+@ExperimentalStdlibApi
 class Main : ApplicationAdapter() {
     private lateinit var batch: SpriteBatch
-    private lateinit var backgound: Backgound
+    private lateinit var background: Background
     private lateinit var bird: Bird
+    private  lateinit var obstacles: Obstacles
 
 
 
     override fun create() {
-        backgound = Backgound()
+        background = Background()
         batch = SpriteBatch()
         bird = Bird()
+        obstacles = Obstacles()
     }
 
     override fun render() {
@@ -24,14 +28,16 @@ class Main : ApplicationAdapter() {
         Gdx.gl.glClearColor(1f, 1f, 1f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         batch.begin()
-        backgound.render(batch)
+        background.render(batch)
         bird.render(batch)
+        obstacles.render(batch)
         batch.end()
     }
 
     fun update(){
-        backgound.update()
+        background.update()
         bird.update()
+        obstacles.update()
     }
 
     override fun dispose() {
