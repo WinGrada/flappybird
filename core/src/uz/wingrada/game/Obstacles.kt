@@ -3,6 +3,7 @@ package uz.wingrada.game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import java.time.ZoneOffset
 import kotlin.random.Random
@@ -15,11 +16,13 @@ class Obstacles(private var amountOfColumns: Int = 5) {
 
         private var speed: Float = 2f
         public val texture: Texture = Texture("column.png")
-
         private val rangeOffsetFrom = 200
         private val rangeOffsetUntil = 400
 
         public var offset = (rangeOffsetFrom..rangeOffsetUntil).random().toFloat()
+
+        public var emptySpace: Rectangle = Rectangle(position.x, position.y - offset + 1024, 144f, distanceBetweenColumnsY)
+
 
         public fun update(){
             moveColumns()
@@ -36,7 +39,8 @@ class Obstacles(private var amountOfColumns: Int = 5) {
     private var distanceBetweenColumnsY: Float = 280f
 
 
-    // В массиве экземпляра класса, создаются колоны с разной начальной позицией.
+
+    // В массиве экземпляров класса, создаются колоны с разной начальной позицией.
     private val obstacles= buildList<Columns>{
         val startPositionColumnsX: Float = 1200f
         val distanceBetweenColumnsX: Float = 500f
@@ -74,6 +78,7 @@ class Obstacles(private var amountOfColumns: Int = 5) {
             if (obstacles[i].position.x < -widthColumn){
                 obstacles[i].position.x = Gdx.graphics.width.toFloat()
                 obstacles[i].offset = obstacles[i].updateOffset()
+                obstacles[i].emptySpace.x = obstacles[i].position.x
             }
             obstacles[i].update()
 
