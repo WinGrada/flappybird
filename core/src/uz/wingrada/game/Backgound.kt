@@ -7,10 +7,10 @@ import com.badlogic.gdx.math.Vector2
 
 open class Background {
 
-
+    private val heightScreen = Gdx.graphics.height.toFloat()
+    private val widthScreen = Gdx.graphics.width.toFloat()
 
     private val bgPicture = arrayOf(BGPicture(), BGPicture(position = Vector2(widthScreen, 0f)))
-    private val bgpic:BGPicture = BGPicture()
     private var speed: Int = 4
 
     inner class BGPicture(var texture: Texture = Texture("SkyBackground.png"),
