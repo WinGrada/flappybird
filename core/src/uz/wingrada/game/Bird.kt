@@ -7,10 +7,10 @@ import com.badlogic.gdx.math.Vector2
 
 class Bird {
 
-    private val startPositionBirdX: Float = (Gdx.graphics.height / 2).toFloat()
+    private val startPositionBirdX: Float = 1197f//(Gdx.graphics.height / 2).toFloat()
     private val startPositionBirdY: Float = (Gdx.graphics.width / 4.5).toFloat()
 
-    private val position: Vector2 = Vector2(startPositionBirdX, startPositionBirdY)
+    public val position: Vector2 = Vector2(startPositionBirdX, startPositionBirdY)
     private val img: Texture = Texture("bird.png")
 
     private var vectorY = 0f

@@ -10,12 +10,13 @@ import kotlin.random.Random
 
 
 @ExperimentalStdlibApi
-class Obstacles(private var amountOfColumns: Int = 5) {
+class Obstacles(var amountOfColumns: Int = 5) {
 
     inner class Columns(public var position: Vector2 = Vector2(0f, 0f)) {
 
         private var speed: Float = 2f
         public val texture: Texture = Texture("column.png")
+        public val widthColumn = 144
         private val rangeOffsetFrom = 200
         private val rangeOffsetUntil = 400
 
@@ -41,7 +42,7 @@ class Obstacles(private var amountOfColumns: Int = 5) {
 
 
     // В массиве экземпляров класса, создаются колоны с разной начальной позицией.
-    private val obstacles= buildList<Columns>{
+    public val columns= buildList<Columns>{
         val startPositionColumnsX: Float = 1200f
         val distanceBetweenColumnsX: Float = 500f
         val randomOffset = (200..400).random().toFloat()
@@ -64,23 +65,22 @@ class Obstacles(private var amountOfColumns: Int = 5) {
     private fun renderColumns(batch: SpriteBatch){
         for ( i in 0 until amountOfColumns){
             // Нижняя часть колоны.
-            batch.draw(obstacles[i].texture, obstacles[i].position.x, obstacles[i].position.y - obstacles[i].offset)
+            batch.draw(columns[i].texture, columns[i].position.x, columns[i].position.y - columns[i].offset)
 
             // Верхняя часть колоны.
-            batch.draw(obstacles[i].texture, obstacles[i].position.x,
-                    obstacles[i].position.y + obstacles[i].texture.height + distanceBetweenColumnsY - obstacles[i].offset)
+            batch.draw(columns[i].texture, columns[i].position.x,
+                    columns[i].position.y + columns[i].texture.height + distanceBetweenColumnsY - columns[i].offset)
         }
     }
 
     private fun loopColumns(){
-        val widthColumn = 144
         for (i in 0 until amountOfColumns ){
-            if (obstacles[i].position.x < -widthColumn){
-                obstacles[i].position.x = Gdx.graphics.width.toFloat()
-                obstacles[i].offset = obstacles[i].updateOffset()
-                obstacles[i].emptySpace.x = obstacles[i].position.x
+            if (columns[i].position.x < -columns[i].widthColumn){
+                columns[i].position.x = Gdx.graphics.width.toFloat()
+                columns[i].offset = columns[i].updateOffset()
+                columns[i].emptySpace.x = columns[i].position.x
             }
-            obstacles[i].update()
+            columns[i].update()
 
         }
     }
